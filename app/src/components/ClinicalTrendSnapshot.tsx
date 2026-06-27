@@ -50,34 +50,34 @@ export function ClinicalTrendSnapshot({ patient, readings, thresholds }: Props) 
   }
 
   // Helper functions
-  const avg = (arr: number[]) => Math.round(arr.reduce((a, b) => a + b, 0) / arr.length);
-  const getPercent = (start: number, end: number) => Math.round(((end - start) / start) * 100);
+  const avg = (arr: number[]) => arr.length ? Math.round(arr.reduce((a, b) => a + b, 0) / arr.length) : 0;
+  const getPercent = (start: number, end: number) => start ? Math.round(((end - start) / start) * 100) : 0;
 
   // Systolic
-  const sysArr = filteredReadings.map(r => r.systolic);
-  const startSys = sysArr[0];
-  const endSys = sysArr[sysArr.length - 1];
+  const sysArr = filteredReadings.map(r => r.systolic).filter((v): v is number => v !== undefined);
+  const startSys = sysArr.length ? sysArr[0] : 0;
+  const endSys = sysArr.length ? sysArr[sysArr.length - 1] : 0;
   const sysAvg = avg(sysArr);
   const sysPercent = getPercent(startSys, endSys);
-  const sysMax = Math.max(...sysArr);
+  const sysMax = sysArr.length ? Math.max(...sysArr) : 0;
 
   // Heart Rate
-  const hrArr = filteredReadings.map(r => r.heartRate);
-  const startHr = hrArr[0];
-  const endHr = hrArr[hrArr.length - 1];
+  const hrArr = filteredReadings.map(r => r.heartRate).filter((v): v is number => v !== undefined);
+  const startHr = hrArr.length ? hrArr[0] : 0;
+  const endHr = hrArr.length ? hrArr[hrArr.length - 1] : 0;
   const hrAvg = avg(hrArr);
   const hrPercent = getPercent(startHr, endHr);
 
   // SpO2
-  const spo2Arr = filteredReadings.map(r => r.oxygenSaturation);
-  const spo2Min = Math.min(...spo2Arr);
+  const spo2Arr = filteredReadings.map(r => r.oxygenSaturation).filter((v): v is number => v !== undefined);
+  const spo2Min = spo2Arr.length ? Math.min(...spo2Arr) : 0;
   const spo2Avg = avg(spo2Arr);
 
   // Glucose
-  const glucArr = filteredReadings.map(r => r.bloodGlucose);
-  const glucAvg = (glucArr.reduce((a, b) => a + b, 0) / glucArr.length).toFixed(1);
-  const startGluc = glucArr[0];
-  const endGluc = glucArr[glucArr.length - 1];
+  const glucArr = filteredReadings.map(r => r.bloodGlucose).filter((v): v is number => v !== undefined);
+  const glucAvg = glucArr.length ? (glucArr.reduce((a, b) => a + b, 0) / glucArr.length).toFixed(1) : '0.0';
+  const startGluc = glucArr.length ? glucArr[0] : 0;
+  const endGluc = glucArr.length ? glucArr[glucArr.length - 1] : 0;
   const glucPercent = getPercent(startGluc, endGluc);
 
   // Determine Overall Status
