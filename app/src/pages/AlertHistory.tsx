@@ -27,7 +27,7 @@ export function AlertHistory() {
       result = result.filter(a => 
         a.patientName.toLowerCase().includes(q) ||
         a.room.toLowerCase().includes(q) ||
-        a.message.toLowerCase().includes(q) ||
+        a.description.toLowerCase().includes(q) ||
         a.id.toLowerCase().includes(q)
       );
     }
@@ -142,7 +142,7 @@ export function AlertHistory() {
                         {alert.severity}
                       </span>
                     </td>
-                    <td className="px-4 py-3 font-body text-[1.3rem] text-neutral-800">{alert.message}</td>
+                    <td className="px-4 py-3 font-body text-[1.3rem] text-neutral-800">{alert.description}</td>
                     <td className="px-4 py-3">
                       {getStatusBadge(alert.status)}
                     </td>

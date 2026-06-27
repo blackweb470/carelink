@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { AlertOctagon, ArrowRight, X } from 'lucide-react';
+import { AlertOctagon, ArrowRight } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
 
 export function GlobalAlertBanner() {
@@ -34,7 +34,7 @@ export function GlobalAlertBanner() {
             {criticalAlerts.map(alert => (
               <div key={alert.id} className="flex items-center justify-between bg-black/10 rounded p-3">
                 <p className="font-body text-[1.3rem] opacity-100">
-                  <span className="font-bold">{alert.patientName}</span> ({alert.room}): {alert.message}
+                  <span className="font-bold">{alert.patientName}</span> ({alert.room}): {alert.description}
                 </p>
                 <div className="flex items-center gap-2">
                   <button

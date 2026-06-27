@@ -27,7 +27,6 @@ export function HeaderBar() {
       case 'dashboard': return 'Clinical Dashboard';
       case 'patients': return 'Patient Directory';
       case 'patient': return 'Patient Profile';
-      case 'hardware': return 'Hardware Management';
       case 'hubs': return 'Gateway Hubs';
       case 'wearables': return 'Wearables';
       default: return 'KAYZ CareLink';
@@ -125,7 +124,7 @@ export function HeaderBar() {
                               </button>
                             </div>
                           </div>
-                          <p className="font-body text-[1.2rem] text-neutral-600 mb-2">{alert.message}</p>
+                          <p className="font-body text-[1.2rem] text-neutral-600 mb-2">{alert.description}</p>
                           <div className="flex items-center gap-2">
                             <span className={cn(
                               "text-[1.1rem] px-2 py-0.5 rounded-full font-medium",
