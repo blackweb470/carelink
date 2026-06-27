@@ -108,6 +108,7 @@ export function PatientTable() {
                 { field: 'age' as SortField, label: 'Age' },
                 { field: null, label: 'Primary Device' },
                 { field: 'lastReading' as SortField, label: 'Last Reading' },
+                { field: null, label: 'Risk Score' },
                 { field: null, label: 'Status' },
                 { field: null, label: '' },
               ].map((col, i) => (
@@ -145,6 +146,20 @@ export function PatientTable() {
                 <td className="px-4 py-3 font-body text-[1.3rem] text-neutral-600">{patient.primaryDevice}</td>
                 <td className={cn('px-4 py-3 font-body text-[1.3rem]', getSeverityColor(patient.lastReading.severity))}>
                   {patient.lastReading.value} — {patient.lastReading.timestamp}
+                </td>
+                <td className="px-4 py-3">
+                  {patient.riskScore ? (
+                    <span className={cn(
+                      "px-2 py-1 rounded-full text-xs font-semibold",
+                      patient.riskScore === 'High Risk' ? "bg-alert-red/10 text-alert-red" :
+                      patient.riskScore === 'Moderate Risk' ? "bg-alert-yellow/10 text-alert-yellow" :
+                      "bg-success/10 text-success"
+                    )}>
+                      {patient.riskScore}
+                    </span>
+                  ) : (
+                    <span className="text-neutral-400">-</span>
+                  )}
                 </td>
                 <td className="px-4 py-3">
                   <StatusBadge status={patient.status} />

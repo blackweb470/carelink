@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  ChevronLeft, Heart, Stethoscope, Droplets, Wind,
+  ChevronLeft, Heart, Stethoscope, Droplets, Wind, AlertTriangle
 } from 'lucide-react';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
@@ -234,8 +234,41 @@ export function PatientDetail() {
         </div>
       </div>
       
-      {/* AI Trend Snapshot */}
-      <ClinicalTrendSnapshot patient={patient} readings={allReadings} thresholds={patientThresholds} />
+      {/* AI Trend Snapshot & Insights */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2">
+          <ClinicalTrendSnapshot patient={patient} readings={allReadings} thresholds={patientThresholds} />
+        </div>
+        <div className="lg:col-span-1 space-y-6">
+          {/* Missed Monitoring Detection */}
+          <div className="bg-white border border-neutral-300 rounded-lg p-5">
+            <h4 className="font-heading text-[1.4rem] font-bold text-neutral-900 mb-2 flex items-center gap-2">
+              <AlertTriangle size={18} className="text-alert-yellow" /> Missed Monitoring
+            </h4>
+            {patient.missedReadings && patient.missedReadings > 0 ? (
+               <div className="bg-alert-yellow/10 p-3 rounded border border-alert-yellow/20">
+                 <p className="text-[1.3rem] text-alert-yellow font-medium mb-1">
+                   {patient.missedReadings} scheduled reading{patient.missedReadings > 1 ? 's' : ''} missed
+                 </p>
+                 <p className="text-[1.2rem] text-neutral-600">Possible implications: Non-adherence or device failure.</p>
+               </div>
+            ) : (
+               <p className="text-[1.3rem] text-neutral-600">All scheduled monitoring has been completed successfully.</p>
+            )}
+          </div>
+          {/* Clinical Handover Summary */}
+          <div className="bg-white border border-neutral-300 rounded-lg p-5 h-[calc(100%-120px)]">
+            <h4 className="font-heading text-[1.4rem] font-bold text-neutral-900 mb-2 flex items-center gap-2">
+              <Stethoscope size={18} className="text-primary" /> Handover Summary
+            </h4>
+            <div className="bg-neutral-50 p-3 rounded border border-neutral-200 h-[calc(100%-30px)]">
+              <p className="text-[1.3rem] text-neutral-700">
+                 {patient.handoverSummary || "No significant trends to report at handover. Vitals remain stable within expected parameters."}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Content Row: Charts + Thresholds */}
       <div className="grid grid-cols-1 lg:grid-cols-10 gap-6">

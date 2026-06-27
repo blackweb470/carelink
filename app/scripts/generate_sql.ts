@@ -38,7 +38,7 @@ INSERT INTO user_profiles (name, role, organisation, email, practice_name, addre
 // patients
 sql += '-- Patients\n';
 mockPatients.forEach(p => {
-  sql += `INSERT INTO patients (id, name, nhs_number, age, room, primary_clinician, primary_device, last_reading, status, initials) VALUES (${escapeString(p.id)}, ${escapeString(p.name)}, ${escapeString(p.nhsNumber)}, ${escapeNumber(p.age)}, ${escapeString(p.room)}, ${escapeString(p.primaryClinician)}, ${escapeString(p.primaryDevice)}, ${escapeJson(p.lastReading)}, ${escapeString(p.status)}, ${escapeString(p.initials)});\n`;
+  sql += `INSERT INTO patients (id, name, nhs_number, age, room, primary_clinician, primary_device, last_reading, status, initials, risk_score, clinical_trend, missed_readings, handover_summary) VALUES (${escapeString(p.id)}, ${escapeString(p.name)}, ${escapeString(p.nhsNumber)}, ${escapeNumber(p.age)}, ${escapeString(p.room)}, ${escapeString(p.primaryClinician)}, ${escapeString(p.primaryDevice)}, ${escapeJson(p.lastReading)}, ${escapeString(p.status)}, ${escapeString(p.initials)}, ${escapeString(p.riskScore)}, ${escapeString(p.clinicalTrend)}, ${escapeNumber(p.missedReadings)}, ${escapeString(p.handoverSummary)});\n`;
 });
 sql += '\n';
 
@@ -59,7 +59,7 @@ sql += '\n';
 // alerts
 sql += '-- Alerts\n';
 mockAlerts.forEach(a => {
-  sql += `INSERT INTO alerts (id, patient_id, patient_name, room, severity, description, timestamp, status) VALUES (${escapeString(a.id)}, ${escapeString(a.patientId)}, ${escapeString(a.patientName)}, ${escapeString(a.room)}, ${escapeString(a.severity)}, ${escapeString(a.description)}, ${escapeString(a.timestamp)}, ${escapeString(a.status)});\n`;
+  sql += `INSERT INTO alerts (id, patient_id, patient_name, room, severity, description, timestamp, status, triage_score) VALUES (${escapeString(a.id)}, ${escapeString(a.patientId)}, ${escapeString(a.patientName)}, ${escapeString(a.room)}, ${escapeString(a.severity)}, ${escapeString(a.description)}, ${escapeString(a.timestamp)}, ${escapeString(a.status)}, ${escapeString(a.triageScore)});\n`;
 });
 sql += '\n';
 

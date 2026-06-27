@@ -48,6 +48,7 @@ interface AppState {
   lastUpdated: Date;
   refreshData: () => void;
   isLoading: boolean;
+  simulateAIDeterioration: () => void;
 }
 
 const AppContext = createContext<AppState | null>(null);
@@ -98,6 +99,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           lastReading: p.last_reading,
           status: p.status,
           initials: p.initials,
+          riskScore: p.risk_score,
+          clinicalTrend: p.clinical_trend,
+          missedReadings: p.missed_readings,
+          handoverSummary: p.handover_summary,
         } as Patient)));
       }
 
@@ -111,6 +116,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           description: a.description,
           timestamp: a.timestamp,
           status: a.status,
+          triageScore: a.triage_score,
         } as Alert)));
       }
 
@@ -253,6 +259,44 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setLastUpdated(new Date());
   }, []);
 
+  const simulateAIDeterioration = useCallback(async () => {
+    // Pick a patient to deteriorate (e.g. Eileen Marsh P005)
+    setPatients(prev => prev.map(p => {
+      if (p.id === 'P005') {
+        return {
+          ...p,
+          status: 'critical',
+          riskScore: 'High Risk',
+          missedReadings: 4,
+          handoverSummary: 'SUDDEN DETERIORATION DETECTED: 4 consecutive missed readings. Blood pressure was previously trending upwards. AI identifies high probability of acute event.',
+          lastReading: {
+            ...p.lastReading,
+            severity: 'critical'
+          }
+        };
+      }
+      return p;
+    }));
+
+    // Add a high priority alert
+    const newAlert: Alert = {
+      id: `A-SIM-${Date.now()}`,
+      patientId: 'P005',
+      patientName: 'Eileen Marsh',
+      room: 'Room 1A',
+      severity: 'critical',
+      description: 'AI ALERT: Missing 4 scheduled monitoring checkpoints. High Risk of deterioration. Immediate wellness check required.',
+      timestamp: 'Just now',
+      status: 'unresolved',
+      triageScore: 'High'
+    };
+
+    setAlerts(prev => [newAlert, ...prev]);
+    
+    // Also update in Supabase (if needed, but for MVP simulation state update is enough for frontend display)
+    // Optional: we can insert this into DB but since it's a simulation, just updating state is fine for a quick demo button.
+  }, []);
+
   const unresolvedCriticalCount = alerts.filter(a => a.severity === 'critical' && a.status === 'unresolved').length;
   const unresolvedWarningCount = alerts.filter(a => a.severity === 'warning' && a.status === 'unresolved').length;
 
@@ -291,6 +335,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         lastUpdated,
         refreshData,
         isLoading,
+        simulateAIDeterioration,
       }}
     >
       {children}

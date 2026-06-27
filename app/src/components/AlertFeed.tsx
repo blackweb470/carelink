@@ -8,11 +8,18 @@ import type { AlertFilter } from '@/types';
 export function AlertFeed() {
   const { alerts, alertFilter, setAlertFilter } = useApp();
 
-  const filteredAlerts = alerts.filter((alert) => {
-    if (alertFilter === 'all') return alert.status === 'unresolved';
-    if (alertFilter === 'resolved') return alert.status !== 'unresolved';
-    return alert.severity === alertFilter && alert.status === 'unresolved';
-  });
+  const filteredAlerts = alerts
+    .filter((alert) => {
+      if (alertFilter === 'all') return alert.status === 'unresolved';
+      if (alertFilter === 'resolved') return alert.status !== 'unresolved';
+      return alert.severity === alertFilter && alert.status === 'unresolved';
+    })
+    .sort((a, b) => {
+      const scoreMap = { 'High': 3, 'Medium': 2, 'Low': 1 };
+      const aScore = scoreMap[a.triageScore as keyof typeof scoreMap] || 0;
+      const bScore = scoreMap[b.triageScore as keyof typeof scoreMap] || 0;
+      return bScore - aScore;
+    });
 
   const filterOptions: { value: AlertFilter; label: string }[] = [
     { value: 'all', label: 'All' },

@@ -10,6 +10,7 @@ export const mockAlerts: Alert[] = [
     description: 'Blood pressure critically high — 185/110 mmHg. Systolic trending upward over 5 days.',
     timestamp: '10:23 AM',
     status: 'unresolved',
+    triageScore: 'High',
   },
   {
     id: 'A002',
@@ -20,6 +21,7 @@ export const mockAlerts: Alert[] = [
     description: 'SpO2 dropped to 88%. Oxygen saturation below threshold for 15 minutes.',
     timestamp: '09:45 AM',
     status: 'unresolved',
+    triageScore: 'High',
   },
   {
     id: 'A003',

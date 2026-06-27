@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 export function HeaderBar() {
-  const { currentPage, lastUpdated, refreshData, alerts, navigateToPatient, dismissAlert } = useApp();
+  const { currentPage, lastUpdated, refreshData, alerts, navigateToPatient, dismissAlert, simulateAIDeterioration } = useApp();
   const [spinning, setSpinning] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -52,6 +52,12 @@ export function HeaderBar() {
       <h1 className="text-h1 truncate pr-4">{getTitle()}</h1>
       <div className="flex items-center gap-2 md:gap-4">
         <span className="text-small hidden sm:block">{formatDate()}</span>
+        <button
+          onClick={() => simulateAIDeterioration()}
+          className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-[#8A3FFC] text-white text-[1.2rem] font-medium rounded hover:bg-[#722CE3] transition-colors"
+        >
+          Simulate AI Event
+        </button>
         <button
           onClick={handleRefresh}
           className="p-2 rounded hover:bg-neutral-100 transition-colors"

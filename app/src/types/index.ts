@@ -14,6 +14,10 @@ export interface Patient {
   };
   status: 'critical' | 'warning' | 'stable';
   initials: string;
+  riskScore?: 'Low Risk' | 'Moderate Risk' | 'High Risk';
+  clinicalTrend?: string;
+  missedReadings?: number;
+  handoverSummary?: string;
 }
 
 export interface Alert {
@@ -25,6 +29,7 @@ export interface Alert {
   description: string;
   timestamp: string;
   status: 'unresolved' | 'acknowledged' | 'dismissed';
+  triageScore?: 'High' | 'Medium' | 'Low';
 }
 
 export interface BiometricReading {

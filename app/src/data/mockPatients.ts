@@ -12,6 +12,10 @@ export const mockPatients: Patient[] = [
     lastReading: { type: 'Blood Pressure', value: '185/110 mmHg', timestamp: '10:23 AM', severity: 'critical' },
     status: 'critical',
     initials: 'MW',
+    riskScore: 'High Risk',
+    clinicalTrend: 'Patient’s systolic blood pressure has increased by 15% over the past five days, predominantly during evening measurements.',
+    missedReadings: 2,
+    handoverSummary: 'Blood pressure increasing over five days. Two scheduled readings missed. Evening hypertension pattern emerging.',
   },
   {
     id: 'P002',
@@ -24,6 +28,10 @@ export const mockPatients: Patient[] = [
     lastReading: { type: 'Blood Glucose', value: '9.2 mmol/L', timestamp: 'Yesterday, 4:32 PM', severity: 'warning' },
     status: 'warning',
     initials: 'DL',
+    riskScore: 'Moderate Risk',
+    clinicalTrend: 'Patient has had slightly elevated blood glucose readings over the past 48 hours.',
+    missedReadings: 1,
+    handoverSummary: 'Slightly elevated glucose trend detected. One scheduled reading missed yesterday.',
   },
   {
     id: 'P003',

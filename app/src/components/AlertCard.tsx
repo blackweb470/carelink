@@ -51,7 +51,21 @@ export function AlertCard({ alert }: AlertCardProps) {
             )}
           </span>
         </div>
-        <span className="text-[1.1rem] text-neutral-400 shrink-0">{alert.timestamp}</span>
+        <div className="flex items-center gap-2">
+          {alert.triageScore && (
+            <span
+              className={cn(
+                'text-[1.1rem] px-2 py-0.5 rounded-full font-medium',
+                alert.triageScore === 'High' ? 'bg-alert-red/20 text-alert-red' :
+                alert.triageScore === 'Medium' ? 'bg-alert-yellow/20 text-[#C99600]' :
+                'bg-success/20 text-success'
+              )}
+            >
+              AI Triage: {alert.triageScore}
+            </span>
+          )}
+          <span className="text-[1.1rem] text-neutral-400 shrink-0">{alert.timestamp}</span>
+        </div>
       </div>
 
       {/* Room */}
